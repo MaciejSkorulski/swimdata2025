@@ -41,15 +41,17 @@ st.subheader("3. Wprowadź dane zawodników")
 # Przygotowanie tabeli z miejscem do wpisu
 data = []
 for name in zawodnicy:
-    col1, col2, col3, col4 = st.columns([2, 1, 1, 3])
+    col1, col2, col3 = st.columns([2, 2, 6])
     with col1:
-        st.markdown(f"**{name}**")
+        presence = st.checkbox(f"{name} ✅", key=f"{name}_presence")
     with col2:
-        presence = st.checkbox("Obecny", key=f"{name}_presence")
-    with col3:
         training_ab = st.selectbox("A/B", ["-", "A", "B"], key=f"{name}_ab")
-    with col4:
-        test_result = st.text_input("Grip test / Uwagi", key=f"{name}_test")
+    with col3:
+        col3a, col3b = st.columns([1, 2])
+        with col3a:
+            grip_test = st.text_input("Grip test", key=f"{name}_grip")
+        with col3b:
+            notes = st.text_input("Uwagi", key=f"{name}_notes")
 
     data.append({
         "Data": selected_date,
@@ -58,7 +60,8 @@ for name in zawodnicy:
         "Zawodnik": name,
         "Obecność": "✅" if presence else "❌",
         "Trening A/B": training_ab,
-        "Wynik testu / Uwagi": test_result
+        "Grip test": grip_test,
+        "Uwagi": notes
     })
 
 # ------------------------------
